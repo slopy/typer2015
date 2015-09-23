@@ -7,7 +7,7 @@ gem 'rails-api'
 
 gem 'spring', :group => :development
 
-
+gem 'mongoid', git: 'https://github.com/mongoid/mongoid.git'
 
 
 # To use ActiveModel has_secure_password
@@ -24,3 +24,7 @@ gem 'spring', :group => :development
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
+
+group :development, :test do
+    gem 'rspec-rails'
+end 
