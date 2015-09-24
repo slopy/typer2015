@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc overview
- * @name typerApp
+ * @name angularAppApp
  * @description
- * # typerApp
+ * # angularAppApp
  *
  * Main module of the application.
  */
 angular
-  .module('typerApp', [
+  .module('angularAppApp', [
     'ngAnimate',
     'ngCookies',
     'ngMessages',
@@ -22,13 +22,11 @@ angular
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
-        controller: 'MainCtrl',
-        controllerAs: 'main'
+        controller: 'MainCtrl'
       })
       .when('/about', {
         templateUrl: 'views/about.html',
-        controller: 'AboutCtrl',
-        controllerAs: 'about'
+        controller: 'AboutCtrl'
       })
       .otherwise({
         redirectTo: '/'
