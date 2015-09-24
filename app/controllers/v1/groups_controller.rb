@@ -1,4 +1,4 @@
-class GroupsController < ApplicationController
+class V1::GroupsController < ApiController
   before_action :set_group, only: [:show, :update, :destroy]
 
   # GET /groups
@@ -33,7 +33,7 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
 
     if @group.update(group_params)
-      head :no_content
+      render json: @group, status: :ok, location: @group
     else
       render json: @group.errors, status: :unprocessable_entity
     end
