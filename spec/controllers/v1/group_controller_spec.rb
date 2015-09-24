@@ -16,9 +16,24 @@ require 'rails_helper'
 # is no simpler way to get a handle on the object needed for the example.
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
+module MyEngine
+  class Engine < ::Rails::Engine
+    isolate_namespace MyEngine
+  end
+
+  Engine.routes.draw do
+
+    scope 'api' do
+        namespace :v1 do 
+            resources :groups, except: [:new, :edit]
+        end
+    end
+  end
+
+end
 
 RSpec.describe V1::GroupsController, type: :controller do
-
+  routes { MyEngine::Engine.routes }
   login_user
   # This should return the minimal set of attributes required to create a valid
   # Group. As you add validations to Group, be sure to

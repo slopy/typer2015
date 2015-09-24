@@ -8,27 +8,46 @@
  *
  * Main module of the application.
  */
-angular
+
+var typer = angular
   .module('angularAppApp', [
     'ngAnimate',
     'ngCookies',
     'ngMessages',
     'ngResource',
-    'ngRoute',
+    // 'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'ng-token-auth',
+    'ui.router'
   ])
-  .config(function ($routeProvider) {
-    $routeProvider
-      .when('/', {
+
+typer.run(['$state', '$stateParams',
+    function($state, $stateParams) {
+  }])
+  
+typer.config(function ($stateProvider,$urlRouterProvider,$authProvider) {
+    // $routeProvider
+
+    $urlRouterProvider.otherwise("/");
+        
+
+
+    $stateProvider
+    .state('/', {
+        url: "/",
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
-      })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl'
-      })
-      .otherwise({
-        redirectTo: '/'
-      });
+    })
+    .state('/sign_in', {
+        url: '/sing_in',
+        templateUrl: 'views/user_sessions/new.html',
+        controller: 'UserSessionsNewCtrl'
+    });
+
+    $authProvider.configure({
+      apiUrl: "0.0.0.0:3000",
+
+    })    
+  
   });

@@ -74,7 +74,8 @@ module.exports = function (grunt) {
           // If async: true were omitted, the rails server
           // command would prevent subsequent commands
           // from running.
-          async: true
+          async: true,
+          binding: "0.0.0.0"
         }
       }
     },
