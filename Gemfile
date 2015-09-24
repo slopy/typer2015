@@ -10,6 +10,9 @@ gem 'spring', :group => :development
 gem 'mongoid', git: 'https://github.com/mongoid/mongoid.git'
 
 gem 'pry'
+
+gem 'devise'
+gem 'simple_token_authentication'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -28,4 +31,5 @@ gem 'pry'
 group :development, :test do
     gem 'rspec-rails'
     gem 'factory_girl'
+    gem 'faker'
 end 
