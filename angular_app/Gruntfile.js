@@ -66,15 +66,33 @@ module.exports = function (grunt) {
         ]
       }
     },
-
+    //  run shell comands
+    shell: {
+      startRailsServer: {
+        command: 'rails server',
+        options: {
+          // If async: true were omitted, the rails server
+          // command would prevent subsequent commands
+          // from running.
+          async: true
+        }
+      }
+    },
     // The actual grunt server settings
     connect: {
       options: {
         port: 9000,
         // Change this to '0.0.0.0' to access the server from outside.
-        hostname: 'localhost',
+        hostname: '0.0.0.0',
         livereload: 35729
       },
+      proxiex: [
+        {
+            context: '/api',
+            host: '0.0.0.0',
+            port: 3000
+        }
+      ],
       livereload: {
         options: {
           open: true,
@@ -447,13 +465,16 @@ module.exports = function (grunt) {
       return grunt.task.run(['build', 'connect:dist:keepalive']);
     }
 
+    grunt.loadNpmTasks('grunt-shell-spawn');
+
     grunt.task.run([
       'clean:server',
       'wiredep',
       'concurrent:server',
       'autoprefixer:server',
       'connect:livereload',
-      'watch'
+      'shell:startRailsServer',
+      'watch',
     ]);
   });
 
