@@ -11,3 +11,10 @@
 /log/*
 !/log/.keep
 /tmp
+
+/node_modules
+
+/angular_app/bower_components
+/angular_app/node_modules
+/angular_app/bower_components
+
