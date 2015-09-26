@@ -69,13 +69,12 @@ module.exports = function (grunt) {
     //  run shell comands
     shell: {
       startRailsServer: {
-        command: 'rails server',
+        command: 'rails server -b "0.0.0.0"',
         options: {
           // If async: true were omitted, the rails server
           // command would prevent subsequent commands
           // from running.
-          async: true,
-          binding: "0.0.0.0"
+          async: true
         }
       }
     },
@@ -87,18 +86,19 @@ module.exports = function (grunt) {
         hostname: '0.0.0.0',
         livereload: 35729
       },
-      proxiex: [
+      proxies: [
         {
-            context: '/api',
+            context: '/api/',
             host: '0.0.0.0',
             port: 3000
         }
       ],
       livereload: {
         options: {
-          open: true,
           middleware: function (connect) {
+            var proxy = require('grunt-connect-proxy/lib/utils').proxyRequest;
             return [
+              proxy,
               connect.static('.tmp'),
               connect().use(
                 '/bower_components',
@@ -467,12 +467,14 @@ module.exports = function (grunt) {
     }
 
     grunt.loadNpmTasks('grunt-shell-spawn');
+    grunt.loadNpmTasks('grunt-connect-proxy');
 
     grunt.task.run([
       'clean:server',
       'wiredep',
       'concurrent:server',
       'autoprefixer:server',
+      'configureProxies',
       'connect:livereload',
       'shell:startRailsServer',
       'watch',

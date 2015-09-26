@@ -34,6 +34,27 @@ class User
   # field :unlock_token,    type: String # Only if unlock strategy is :email or :both
   # field :locked_at,       type: Time
 
-  acts_as_token_authenticatable
-  field :authentication_token
+  ## Tokens
+  field :tokens, type: Hash, default: { }
+
+  ## unique oauth id
+  field :provider, type: String
+  field :uid, default: ""
+
+    # Get rid of devise-token_auth issues from activerecord
+  def self.table_exists?
+    true
+  end
+
+  def self.columns_hash
+    # Just fake it for devise-token-auth; since this model is schema-less, this method is not really useful otherwise
+    {} # An empty hash, so tokens_has_json_column_type will return false, which is probably what you want for Monogoid/BSON
+  end
+
+  def self.serialize(*args)
+
+  end
+
+  include DeviseTokenAuth::Concerns::User
+
 end

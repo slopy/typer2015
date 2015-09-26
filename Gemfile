@@ -12,7 +12,11 @@ gem 'mongoid', git: 'https://github.com/mongoid/mongoid.git'
 gem 'pry'
 
 gem 'devise'
-gem 'simple_token_authentication'
+gem 'devise_token_auth', github: 'ybian/devise_token_auth', branch: 'mongoid'
+# omniauth providers
+gem 'omniauth-github',        :git => 'git://github.com/intridea/omniauth-github.git'
+gem 'omniauth-facebook',      :git => 'git://github.com/mkdynamic/omniauth-facebook.git'
+gem 'omniauth-google-oauth2', :git => 'git://github.com/zquestz/omniauth-google-oauth2.git'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

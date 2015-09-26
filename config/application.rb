@@ -17,6 +17,7 @@ Bundler.require(*Rails.groups)
 
 module Typer2015
   class Application < Rails::Application
+    config.autoload_paths << Rails.root.join('lib')
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -28,7 +29,7 @@ module Typer2015
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
-
+    config.api_only = false
     config.generators do |g|
       g.test_framework :rspec,
         fixtures: false,

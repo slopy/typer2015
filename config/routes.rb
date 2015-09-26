@@ -1,8 +1,13 @@
 Rails.application.routes.draw do
 
-  devise_for :users, path: "api/auth", 
-  path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret',
-  confirmation: 'verification', unlock: 'unblock', registration: 'register', sign_up: 'cmon_let_me_in' }
+  # devise_for :users, path: "api/auth", 
+  # controllers: { sessions: "v1/users/sessions", registrations: "v1/users/registrations" }
+
+  mount_devise_token_auth_for 'User', at: 'api/auth', skip: [:omniauth_callbacks],
+  controllers: {
+    registrations:  'v1/users/registrations'
+  }
+
 
   scope 'api' do
     namespace :v1 do 

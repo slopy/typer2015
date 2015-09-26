@@ -37,7 +37,12 @@ typer.config(function ($stateProvider,$urlRouterProvider,$authProvider) {
     .state('/', {
         url: "/",
         templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+        controller: 'MainCtrl',
+        resolve: {
+          auth: function($auth) {
+            return $auth.validateUser();
+          }
+        }
     })
     .state('/sign_in', {
         url: '/sing_in',
@@ -46,8 +51,10 @@ typer.config(function ($stateProvider,$urlRouterProvider,$authProvider) {
     });
 
     $authProvider.configure({
-      apiUrl: "0.0.0.0:3000",
-
+        emailSignInPath: '/auth/sign_in',
+        tokenValidationPath: '/auth/validate_token',
+        emailRegistrationPath: '/auth',
+        signOutUrl: '/auth/sign_out'
     })    
   
   });
