@@ -5,8 +5,7 @@ class V1::GroupsController < ApiController
   # GET /groups.json
   def index
     @groups = Group.all
-
-    render json: @groups
+    render json: @groups, status: :ok
   end
 
   # GET /groups/1
@@ -21,7 +20,7 @@ class V1::GroupsController < ApiController
     @group = Group.new(group_params)
 
     if @group.save
-      render json: @group, status: :created, location: @group
+      render json: @group, status: :created
     else
       render json: @group.errors, status: :unprocessable_entity
     end
@@ -33,7 +32,7 @@ class V1::GroupsController < ApiController
     @group = Group.find(params[:id])
 
     if @group.update(group_params)
-      render json: @group, status: :ok, location: @group
+      render json: @group, status: :ok
     else
       render json: @group.errors, status: :unprocessable_entity
     end

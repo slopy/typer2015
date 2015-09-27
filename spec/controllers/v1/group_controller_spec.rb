@@ -16,141 +16,179 @@ require 'rails_helper'
 # is no simpler way to get a handle on the object needed for the example.
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
-module MyEngine
-  class Engine < ::Rails::Engine
-    isolate_namespace MyEngine
-  end
+  # module MyEngine
+  #   class Engine < ::Rails::Engine
+  #     isolate_namespace MyEngine
+  #   end
 
-  Engine.routes.draw do
+  #   Engine.routes.draw do
 
-    scope 'api' do
-        namespace :v1 do 
-            resources :groups, except: [:new, :edit]
-        end
-    end
-  end
+  #     scope 'api' do
+  #         namespace :v1 do 
+  #             resources :groups, except: [:new, :edit]
+  #         end
+  #     end
+  #   end
 
-end
+  # end
 
 RSpec.describe V1::GroupsController, type: :controller do
-  routes { MyEngine::Engine.routes }
-  login_user
+
   # This should return the minimal set of attributes required to create a valid
   # Group. As you add validations to Group, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { {name: "test"} }
-
-  let(:invalid_attributes) { { name: "" } }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # GroupsController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
 
-  describe "GET #index" do
-    it "assigns all groups as @groups" do
-      group = Group.create! valid_attributes
-      get :index, {}, valid_session
-      expect(response).to be_success
-      expect(json.last['name']).to eq(group.name)
-    end
-  end
+  context "logged user" do 
+    let(:valid_attributes) { {name: "test"} }
+    let(:invalid_attributes) { { name: "" } }
+    let(:valid_session) {}
+    login_user
 
-  describe "GET #show" do
-    it "assigns the requested group as @group" do
-      group = Group.create! valid_attributes
-      get :show, {:id => group.to_param}, valid_session
-      expect(assigns(:group)).to eq(group)
-    end
-  end
-
-  describe "POST #create" do
-    context "with valid params" do
-      it "creates a new Group" do
-        expect {
-          post :create, {:group => valid_attributes}, valid_session
-        }.to change(Group, :count).by(1)
-      end
-
-      it "assigns a newly created group as @group" do
-        post :create, {:group => valid_attributes}, valid_session
-        expect(assigns(:group)).to be_a(Group)
-        expect(assigns(:group)).to be_persisted
-      end
-
-      it "redirects to the created group" do
-        post :create, {:group => valid_attributes}, valid_session
-        expect(response).to have_http_status(:created)
-      end
-    end
-
-    context "with invalid params" do
-      it "assigns a newly created but unsaved group as @group" do
-        post :create, {:group => invalid_attributes}, valid_session
-        expect(assigns(:group)).to be_a_new(Group)
-      end
-
-      it "re-renders the 'new' template" do
-        post :create, {:group => invalid_attributes}, valid_session
-        expect(response).to have_http_status(:unprocessable_entity)
-      end
-    end
-  end
-
-  describe "PUT #update" do
-    context "with valid params" do
-      let(:new_attributes) {
-        {name: "test_new"}
-      }
-
-      it "updates the requested group" do
+    describe "GET #index" do
+      it "assigns all groups as @groups" do
         group = Group.create! valid_attributes
-        put :update, {:id => group.to_param, :group => new_attributes}, valid_session
-        group.reload
-        expect(response).to have_http_status(:ok)
+        get :index, { format: :json}
+        expect(assigns(:groups)).to include(group)
+        expect(json.last['name']).to eq(group.name)
+        expect(response.status).to be 200
       end
+    end
 
+    describe "GET #show" do
       it "assigns the requested group as @group" do
         group = Group.create! valid_attributes
-        put :update, {:id => group.to_param, :group => valid_attributes}, valid_session
+        get :show, {:id => group.to_param}
         expect(assigns(:group)).to eq(group)
       end
+    end
 
-      it "redirects to the group" do
+    describe "POST #create" do
+      context "with valid params" do
+        it "creates a new Group" do
+          expect {
+            post :create, {:group => valid_attributes, format: :json}
+          }.to change(Group, :count).by(1)
+        end
+
+        it "assigns a newly created group as @group" do
+          post :create, {:group => valid_attributes, format: :json}
+          expect(assigns(:group)).to be_a(Group)
+          expect(assigns(:group)).to be_persisted
+        end
+
+        it "redirects to the created group" do
+          post :create, {:group => valid_attributes}
+          expect(response).to have_http_status(:created)
+        end
+      end
+
+      context "with invalid params" do
+        it "assigns a newly created but unsaved group as @group" do
+          post :create, {:group => invalid_attributes}
+          expect(assigns(:group)).to be_a_new(Group)
+        end
+
+        it "re-renders the 'new' template" do
+          post :create, {:group => invalid_attributes}
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+      end
+    end
+
+    describe "PUT #update" do
+      context "with valid params" do
+        let(:new_attributes) {
+          {name: "test_new"}
+        }
+
+        it "updates the requested group" do
+          group = Group.create! valid_attributes
+          put :update, {:id => group.to_param, :group => new_attributes}, valid_session
+          group.reload
+          expect(response).to have_http_status(:ok)
+        end
+
+        it "assigns the requested group as @group" do
+          group = Group.create! valid_attributes
+          put :update, {:id => group.to_param, :group => valid_attributes}, valid_session
+          expect(assigns(:group)).to eq(group)
+        end
+
+        it "redirects to the group" do
+          group = Group.create! valid_attributes
+          put :update, {:id => group.to_param, :group => valid_attributes}, valid_session
+          expect(response).to have_http_status(:success)
+        end
+      end
+
+      context "with invalid params" do
+        it "assigns the group as @group" do
+          group = Group.create! valid_attributes
+          put :update, {:id => group.to_param, :group => invalid_attributes}, valid_session
+          expect(assigns(:group)).to eq(group)
+        end
+
+        it "re-renders the 'edit' template" do
+          group = Group.create! valid_attributes
+          put :update, {:id => group.to_param, :group => invalid_attributes}, valid_session
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+      end
+    end
+
+    describe "DELETE #destroy" do
+      it "destroys the requested group" do
         group = Group.create! valid_attributes
-        put :update, {:id => group.to_param, :group => valid_attributes}, valid_session
+        expect {
+          delete :destroy, {:id => group.to_param}, valid_session
+        }.to change(Group, :count).by(-1)
+      end
+
+      it "redirects to the groups list" do
+        group = Group.create! valid_attributes
+        delete :destroy, {:id => group.to_param}, valid_session
         expect(response).to have_http_status(:success)
       end
     end
 
-    context "with invalid params" do
-      it "assigns the group as @group" do
-        group = Group.create! valid_attributes
-        put :update, {:id => group.to_param, :group => invalid_attributes}, valid_session
-        expect(assigns(:group)).to eq(group)
+  end  
+  # end of context
+
+  context "user not logged" do 
+    let(:valid_attributes) { {name: "test"} }
+    let(:invalid_attributes) { { name: "" } }
+    let(:valid_session) {}
+    let(:new_attributes) { {name: "test_new"} }
+
+    describe "CRUD" do
+      it 'GET return status 401' do 
+        get :index, {}
+        expect(response.status).to eq(401)
       end
 
-      it "re-renders the 'edit' template" do
+      it 'POST return status 401' do 
+        post :create, {:group => valid_attributes, format: :json}
+        expect(response.status).to eq(401)
+      end
+
+      it 'PUT return status 401' do 
         group = Group.create! valid_attributes
-        put :update, {:id => group.to_param, :group => invalid_attributes}, valid_session
-        expect(response).to have_http_status(:unprocessable_entity)
+        put :update, {:id => group.to_param,:group => new_attributes, format: :json}
+        expect(response.status).to eq(401)
+      end
+
+      it "DELETE return status 401" do
+        group = Group.create! valid_attributes
+        delete :destroy, {:id => group.to_param, format: :json}
+        expect(response.status).to eq(401)
       end
     end
+
   end
 
-  describe "DELETE #destroy" do
-    it "destroys the requested group" do
-      group = Group.create! valid_attributes
-      expect {
-        delete :destroy, {:id => group.to_param}, valid_session
-      }.to change(Group, :count).by(-1)
-    end
-
-    it "redirects to the groups list" do
-      group = Group.create! valid_attributes
-      delete :destroy, {:id => group.to_param}, valid_session
-      expect(response).to have_http_status(:success)
-    end
-  end
 
 end
