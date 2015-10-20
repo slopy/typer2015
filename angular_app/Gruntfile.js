@@ -31,6 +31,33 @@ module.exports = function (grunt) {
     // Project settings
     yeoman: appConfig,
 
+    // compile coffee files
+    coffee: { 
+      glob_to_multiple: {
+        expand: true,
+        flatten: true,
+        cwd: '<%= yeoman.app %>/scripts',
+        src: ['**/*.coffee'],
+        dest: '<%= yeoman.app %>/scripts/tmp_coffee',
+        ext: '.js'
+      }
+    },
+
+    // add tags to index.html
+    tags: {
+        build: {
+            options: {
+                scriptTemplate: '<script src="{{ path }}"></script>',
+                openTag: '<!-- start template tags -->',
+                closeTag: '<!-- end template tags -->'
+            },
+            src: [
+                '<%= yeoman.app %>/scripts/tmp_coffee/**/*.js',
+            ],
+            dest: '<%= yeoman.app %>/index.html'
+        }
+    },
+
     // Watches files for changes and runs tasks based on the changed files
     watch: {
       bower: {
@@ -40,6 +67,13 @@ module.exports = function (grunt) {
       js: {
         files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
         tasks: ['newer:jshint:all'],
+        options: {
+          livereload: '<%= connect.options.livereload %>'
+        }
+      },
+      coffee: {
+        files: ['<%= yeoman.app %>/scripts/{,*/}{,*/}*.coffee'],
+        tasks: ['coffee'],
         options: {
           livereload: '<%= connect.options.livereload %>'
         }
@@ -62,6 +96,7 @@ module.exports = function (grunt) {
         files: [
           '<%= yeoman.app %>/{,*/}*.html',
           '.tmp/styles/{,*/}*.css',
+          '.tmp/scripts/{,*/}*.js',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
       }
@@ -104,10 +139,6 @@ module.exports = function (grunt) {
                 '/bower_components',
                 connect.static('./bower_components')
               ),
-              connect().use(
-                '/app/styles',
-                connect.static('./app/styles')
-              ),
               connect.static(appConfig.app)
             ];
           }
@@ -145,8 +176,8 @@ module.exports = function (grunt) {
       },
       all: {
         src: [
-          'Gruntfile.js',
-          '<%= yeoman.app %>/scripts/{,*/}*.js'
+          '<%= yeoman.app %>/scripts/{,*/}*.js',
+          '!<%= yeoman.app %>/scripts/tmp_coffee/{,*/}*.js'
         ]
       },
       test: {
@@ -165,11 +196,11 @@ module.exports = function (grunt) {
           src: [
             '.tmp',
             '<%= yeoman.dist %>/{,*/}*',
-            '!<%= yeoman.dist %>/.git{,*/}*'
+            '!<%= yeoman.dist %>/.git{,*/}*',
           ]
         }]
       },
-      server: '.tmp'
+      server: ['.tmp','<%= yeoman.app %>/scripts/tmp_coffee{,*/}*']
     },
 
     // Add vendor prefixed styles
@@ -220,10 +251,10 @@ module.exports = function (grunt) {
             }
           }
       },
-      sass: {
-        src: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
-        ignorePath: /(\.\.\/){1,2}bower_components\//
-      }
+      // sass: {
+      //   src: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
+      //   ignorePath: /(\.\.\/){1,2}bower_components\//
+      // }
     },
 
     // Compiles Sass to CSS and generates necessary files if requested
@@ -250,7 +281,7 @@ module.exports = function (grunt) {
       },
       server: {
         options: {
-          sourcemap: true
+          sourcemap: false
         }
       }
     },
@@ -262,7 +293,7 @@ module.exports = function (grunt) {
           '<%= yeoman.dist %>/scripts/{,*/}*.js',
           '<%= yeoman.dist %>/styles/{,*/}*.css',
           '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-          '<%= yeoman.dist %>/styles/fonts/*'
+          '<%= yeoman.dist %>/styles/fonts/*',
         ]
       }
     },
@@ -468,10 +499,14 @@ module.exports = function (grunt) {
 
     grunt.loadNpmTasks('grunt-shell-spawn');
     grunt.loadNpmTasks('grunt-connect-proxy');
+    grunt.loadNpmTasks('grunt-contrib-coffee');
+    grunt.loadNpmTasks('grunt-script-link-tags');
 
     grunt.task.run([
       'clean:server',
       'wiredep',
+      'coffee',
+      'tags',
       'concurrent:server',
       'autoprefixer:server',
       'configureProxies',

@@ -19,41 +19,58 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <!-- Add your site or application content here -->
-    <div class="header">
+    <div class="header ng-cloak" ng-controller='NavbarCtrl'>
       <div class="navbar navbar-default" role="navigation">
-        <div class="container">
-          <div class="navbar-header">
+        <div class="navbar-header">
 
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
+        </div>
+        <div class="hidden-xs">
+          <ul class="nav navbar-nav navbar-left">
+            <li>
+              <a ui-sref="home" href="#/" ng-if='userLogged()' class="ng-cloak">
+                <i class="fa fa-home fa-1x"></i>
+              </a>
+            </li>
+            <li>
+              <a ui-sref="about" href="#/"  class="ng-cloak" ng-if='userLogged()'>
+                About
+              </a>
+            </li>
+          </ul>
 
-            <a class="navbar-brand" href="#/">angularApp</a>
-          </div>
-
-          <div class="collapse navbar-collapse" id="js-navbar-collapse">
-
-            <ul class="nav navbar-nav">
-              <li class="active"><a ui-sref="/" href="#/">Home</a></li>
-              <li ng-show="!user.id"><a ui-sref="/sign_in" href='#/'>Sign in</a></li> 
-              <li><a ng-click='signOut()'>Sign out</a></li>
-            </ul>
-          </div>
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a ui-sref="sign_in" href='#/' ng-if='!userLogged() && false' class="ng-cloak">
+                <i class="fa fa-sign-in fa-1x"></i>
+              </a>
+            </li> 
+            <li>
+              <a ng-click='signOutBtn()' ng-if='userLogged()' class="ng-cloak">
+                <i class="fa fa-sign-out fa-1x"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class='visible-xs collapse-btns' ng-if='userLogged()' >
+          <button class='btn pull-left'>menu</button>
+          <button class='btn pull-right'>user settings</button>
         </div>
       </div>
     </div>
 
-    <div class="container">
-    <div ui-view=""></div>
+    <div class="container-fluid main-content">
+      <img src="images/typer-bg.png" id="bg" alt="">
+
+      <div ui-view=""></div>
     </div>
 
-    <div class="footer">
-      <div class="container">
-      </div>
+    <div class="footer ng-cloak">
+      <ul class="nav navbar-nav navbar-center">
+        <li><a href="#">About</a></li>
+        <li><a href="#">Terms and Conditions</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
     </div>
 
 
@@ -87,8 +104,13 @@
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/user_sessions/new.js"></script>
         <!-- endbuild -->
+        <!-- start template tags -->
+        <script src="scripts/tmp_coffee/current_user.js"></script>
+        <script src="scripts/tmp_coffee/main.js"></script>
+        <script src="scripts/tmp_coffee/navbar.js"></script>
+        <script src="scripts/tmp_coffee/new.js"></script>
+        <script src="scripts/tmp_coffee/showWithActionAfter.js"></script>
+        <!-- end template tags -->
 </body>
 </html>

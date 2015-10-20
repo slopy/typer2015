@@ -15,46 +15,65 @@ var typer = angular
     'ngCookies',
     'ngMessages',
     'ngResource',
-    // 'ngRoute',
     'ngSanitize',
     'ngTouch',
     'ng-token-auth',
     'ui.router'
-  ])
+  ]);
 
-typer.run(['$state', '$stateParams',
-    function($state, $stateParams) {
-  }])
-  
+typer.run(function ($rootScope, $state, currentUser) {
+
+    $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
+        console.log(error)
+        if(error === 'already_logged'){
+            event.preventDefault();
+            $state.go('home'); 
+            return
+        } 
+        if(error.reason === 'unauthorized'){
+            event.preventDefault();
+            $state.go('sign_in'); 
+            return
+        } 
+        if (currentUser.checkIfAuthenticated() === null) {
+            event.preventDefault();
+            $state.go('sign_in');
+
+        }
+    });
+
+});
+
 typer.config(function ($stateProvider,$urlRouterProvider,$authProvider) {
-    // $routeProvider
 
-    $urlRouterProvider.otherwise("/");
-        
-
+ $urlRouterProvider.otherwise('home');
 
     $stateProvider
-    .state('/', {
-        url: "/",
+    .state('sign_in', {
+        url: '/sign_in',
+        templateUrl: 'views/user_sessions/new.html',
+        controller: 'UserSessionsNewCtrl',
+    })
+    .state('home', {
+        url: '/home',
         templateUrl: 'views/main.html',
         controller: 'MainCtrl',
         resolve: {
-          auth: function($auth) {
-            return $auth.validateUser();
-          }
+            auth: function($auth) {
+                return $auth.validateUser();
+            }
         }
-    })
-    .state('/sign_in', {
-        url: '/sing_in',
-        templateUrl: 'views/user_sessions/new.html',
-        controller: 'UserSessionsNewCtrl'
     });
 
     $authProvider.configure({
         emailSignInPath: '/auth/sign_in',
         tokenValidationPath: '/auth/validate_token',
         emailRegistrationPath: '/auth',
-        signOutUrl: '/auth/sign_out'
-    })    
+        signOutUrl: '/auth/sign_out',
+        storage: 'localStorage',
+        validateOnPageLoad: true,
+    });
   
-  });
+});
+
+

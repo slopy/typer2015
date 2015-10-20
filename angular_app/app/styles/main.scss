@@ -1,91 +1,500 @@
+
+//* bootstrap overrides
+
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
-// bower:scss
+$fa-font-path: "/bower_components/fontawesome/fonts";
+
+$panel-background: rgba(229, 228, 223, 0.7) ;
+
+$navbar-default-bg: $panel-background;;
+$navbar-default-color: #000;
+
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
-// endbower
+@import "fontawesome/scss/font-awesome";
 
-.browsehappy {
-  margin: 0.2em 0;
-  background: #ccc;
-  color: #000;
-  padding: 0.2em 0;
-}
 
-body {
-  padding: 0;
-}
+/* ------------------------------------------- */
+/*  Variables
+/* ------------------------------------------- */
 
-/* Everything but the jumbotron gets side spacing for mobile first views */
-.header,
-.marketing,
-.footer {
-  padding-left: 15px;
-  padding-right: 15px;
-}
+$border-color: #000;
+$error_text: red;
+$error_background: #FFAAAA;
 
-/* Custom page header */
+$btn-primary-bg-color: #000;
+$btn-primary-color: #1a80de;
+
+$btn-success-bg-color: #000;
+$btn-success-color: #1a80de;
+
+$collapse-bg-color: $btn-primary-bg-color;
+$collapse-color: $panel-background;
+
+/* end of variables
+/* ------------------------------------------- */
+
+
+/* ------------------------------------------- */
+/* ------------------------------------------- */
+/*  Helpers
+/* ------------------------------------------- */
+
+  .centered {
+    text-align: center;
+  }
+  .inline{ 
+    display: inline;
+  }
+
+  .navbar-center{
+    float: none;
+    display: inline-block;
+    text-align: center;
+
+  }
+
+  .btn-primary {
+    background-color: $btn-primary-bg-color;
+    border-radius: 0px;
+    border-width: 2px;
+    -webkit-box-shadow: 0px 20px 15px -19px rgba(0,0,0,1);
+    -moz-box-shadow: 0px 20px 15px -19px rgba(0,0,0,1);
+    box-shadow: 0px 20px 15px -19px rgba(0,0,0,1);
+    &:hover {
+      background-color: lighten($btn-primary-bg-color, 30%);
+    }
+  }
+
+  .btn-success {
+    background-color: $btn-success-bg-color;
+    border-radius: 0px;
+    border-width: 2px;
+    -webkit-box-shadow: 0px 20px 15px -19px rgba(0,0,0,1);
+    -moz-box-shadow: 0px 20px 15px -19px rgba(0,0,0,1);
+    box-shadow: 0px 20px 15px -19px rgba(0,0,0,1);
+
+    &:hover {
+      background-color: lighten($btn-success-bg-color, 30%);
+    }
+  }
+
+/*  end of helpers
+/* ------------------------------------------- */
+
+/* Navbar 
+/* ------------------------------------------- */
+
 .header {
-  border-bottom: 1px solid #e5e5e5;
-  margin-bottom: 10px;
+  .navbar {
+    height: 40px;
+    border-radius: 0px;
+    border-width: 2px;
+    -webkit-box-shadow: 0px 20px 15px -19px rgba(0,0,0,1);
+    -moz-box-shadow: 0px 20px 15px -19px rgba(0,0,0,1);
+    box-shadow: 0px 20px 15px -19px rgba(0,0,0,1);
+  }
 
-  /* Make the masthead heading the same height as the navigation */
-  h3 {
-    margin-top: 0;
-    margin-bottom: 0;
-    line-height: 40px;
-    padding-bottom: 19px;
+  .navbar-nav {
+    margin: 0;
+    height: 100%;
+    padding: 3px;
+  }
+
+  .navbar-left {
+    margin-left: 3%;
+  }
+
+  .navbar-right {
+    margin-right: 3%;
+  }
+
+  .navbar-nav li a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: $navbar-default-color;
+    opacity: 1;
+    font-weight: bold;
+    font-size: 22px;
+  }
+
+  .navbar-nav li a:hover {
+    color: lighten($navbar-default-color,20%);
+    background-color: darken($navbar-default-bg,20%)
   }
 }
 
-/* Custom page footer */
+.collapse-btns {
+  button {
+    width: 50%;
+  }
+}
+
+
+/* ------------------------------------------- */
+
+.main-content {
+  margin-top: 70px;
+  margin-bottom: 70px;
+}
+
+/* Footer 
+/* ------------------------------------------- */
 .footer {
-  padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5;
-}
-
-.container-narrow > hr {
-  margin: 30px 0;
-}
-
-/* Main marketing message and sign up button */
-.jumbotron {
+  width: 100%;
+  background-color: $panel-background;
+  position: static;
   text-align: center;
-  border-bottom: 1px solid #e5e5e5;
+  bottom: 0;
+  border-radius: 0px;
+  border-width: 2px;
+  -webkit-box-shadow: 0px 20px 15px -19px rgba(0,0,0,1);
+  -moz-box-shadow: 0px 20px 15px -19px rgba(0,0,0,1);
+  box-shadow: 0px 20px 15px -19px rgba(0,0,0,1);
 
-  .btn {
-    font-size: 21px;
-    padding: 14px 24px;
+  .navbar-nav li a {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: $navbar-default-color;
+    opacity: 1;
+    font-weight: bold;
+    font-size: 0.4em;
+  }
+
+  .navbar-nav li a:hover {
+    color: lighten($navbar-default-color,20%);
   }
 }
 
-/* Supporting marketing content */
-.marketing {
-  margin: 40px 0;
+@media screen and (min-width: 768px) { 
+  .footer ul.nav {
+    li { display: inline-block;}
+    li a{
+      font-size: 1.1em;
 
-  p + h4 {
-    margin-top: 28px;
+    }
+  }
+}  
+
+@media screen and (max-width: 768px) { 
+  .footer ul.nav {
+    li { display: inline-block;}
+    li a{
+      font-size: 0.7em;
+
+    }
+  }
+}  
+
+/* ------------------------------------------- */
+
+
+/* Background image*/
+/* ------------------------------------------- */
+#bg {
+  /* Set rules to fill background */
+  min-height: 100%;
+  min-width: 1024px;
+  max-height: 100%;
+  max-width: 100%;
+
+  /* Set up proportionate scaling */
+  width: 100%;
+  height: auto;
+
+  /* Set up positioning */
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+@media screen and (max-width: 1024px) { /* Specific to this particular image */
+  #bg {
+    left: 50%;
+    margin-left: -512px;   /* 50% */
   }
 }
 
-/* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
-  .container {
-    max-width: 730px;
-  }
-
-  /* Remove the padding we set earlier */
-  .header,
-  .marketing,
+@media (min-height: 680px) { 
   .footer {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  /* Space out the masthead */
-  .header {
-    margin-bottom: 30px;
-  }
-  /* Remove the bottom border on the jumbotron for visual effect */
-  .jumbotron {
-    border-bottom: 0;
+    position: fixed;
   }
 }
+@media (min-width: 768px) {
+  .footer {
+    position: fixed;
+  }
+}
+/* end of background image
+/* ------------------------------------------- */
+
+
+/* ------------------------------------------- */
+/* ------------------------------------------- */
+/*  New-session page styling
+/* ------------------------------------------- */
+
+.new-session-left-panel{
+  position: relative;
+  min-height: 300px;
+  padding-right: 0px;
+  background: transparent;
+  z-index: 100;
+}
+
+.sign-container {
+  overflow: hidden;
+}
+
+.sign-panel {
+  label {
+    display: block;
+    white-space: nowrap;
+    max-width: 170px;
+    overflow: hidden;
+  }
+
+  input {
+    border: 1px solid $border-color;
+    border-radius: 0px;
+
+    &.ng-invalid.ng-touched {
+      border-color: $error_text;
+    }
+
+  }
+
+  // after submit
+  form.error {
+    input.ng-invalid{
+      background-color: $error_background;
+      color: #fff;
+      border-color: #fff;
+
+    }
+  }
+
+  border-radius: 0px;
+  &.left {
+    position: relative;
+    z-index: 100;
+    background: transparent;
+  }
+
+  &.sign-in{
+    position: relative;
+    padding: 10px 20px 5px 20px ;
+    background-color: $panel-background;
+    -webkit-box-shadow: inset 0px 0px 50px 2px rgba(0,0,0,0.3);
+    -moz-box-shadow: inset 0px 0px 50px 2px rgba(0,0,0,0.3);
+    box-shadow: inset 0px 0px 50px 2px rgba(0,0,0,0.3);;
+    z-index: 100;
+  }
+
+  &.sign-up-btn{
+    position: relative;
+    background: transparent;
+  }
+
+  &.sign-up {
+    position: relative;
+    padding: 10px 20px 5px 20px ;
+    background-color: $panel-background;
+    -webkit-box-shadow: inset 0px 0px 50px 2px rgba(0,0,0,0.3);
+    -moz-box-shadow: inset 0px 0px 50px 2px rgba(0,0,0,0.3);
+    box-shadow: inset 0px 0px 50px 2px rgba(0,0,0,0.3);
+    z-index: 10;
+  }
+
+  .sign-up-terms-info, .sign-in-info {
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .sign-in-info .fa {
+    opacity: 0.5;
+    padding: 5px;
+    border: 1px solid $border-color;
+    margin: 10px;
+  }
+}
+
+/* sign panels responsiveness
+/* ------------------------------------------- */
+
+@media screen and (min-width: 768px) { 
+  .sign-container {
+    padding-left: 0px;
+    display: inline-flex;
+  }
+
+  .sign-panel {
+    display: inline-flex;
+    height: 290px;
+
+    &.left {
+      width: 35%; // same as register btn width
+    }
+
+    &.sign-in{
+      width: 30%;
+      min-width: 200px !important;
+    }
+
+    &.sign-up-btn {
+      width: 35%;
+      height: 100%;
+
+    }
+
+    &.sign-up {
+      min-width: 315px;
+    }
+
+    form {
+    margin: auto;
+    }
+  }
+  
+  .sign-up-terms-info, .sign-in-info {
+    margin-top: 20px;
+    height: 55px;
+    overflow: hidden;
+  }
+
+  .sign-up-terms-info {
+    width: 300px;
+    margin: auto;
+    margin-top: 20px;
+  } 
+}
+
+@media screen and (max-width: 768px) { 
+  .sign-container {
+    padding-left: 15px;
+  }
+
+  .sign-panel {
+
+    &.sign-in{
+    width: 100%;
+    }
+  }
+
+  .sign-up-terms-info, .sign-in-info {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}
+
+/* errors
+/* ------------------------------------------- */
+
+.register-errors, .login-errors {
+  ul {
+    padding-left: 0px;
+  }
+  ul li {
+    list-style-type: none;
+    color: $error_text;
+    font-size: 13px;
+  }
+}
+/* end of -  New-session page styling
+/* ------------------------------------------- */
+
+/* ------------------------------------------- */
+/* ------------------------------------------- */
+/* ANIMATIONS
+
+/* ------------------------------------------- */
+/* Slide Left  sign up form
+/* ------------------------------------------- */
+
+
+.sign-up.slide-right.ng-hide-remove {
+  // -webkit-transition-delay: 250ms; /* Safari */
+  // transition-delay: 250ms;
+
+  transform: translateX(-100%);
+  -ms-transform: translateX(-100%);
+  -webkit-transform: translateX(-100%);
+
+  transition-duration: 150ms;
+  -webkit-transition-duration: 150ms;
+}
+.sign-up.slide-right.ng-hide-remove {
+  opacity: 0;
+}
+
+.sign-up.slide-right.ng-hide-remove.ng-hide-remove-active {
+  -webkit-transition-delay: 250ms; /* Safari */
+  transition-delay: 250ms;
+  transition-duration: 1000ms;
+  -webkit-transition-duration: 1000ms;
+  transform: translateX(0);
+  -ms-transform: translateX(0);
+  -webkit-transform: translateX(0);
+  
+}
+
+.sign-up.slide-right.ng-hide-remove.ng-hide-remove-active {
+  opacity: 1;
+}
+
+/* ------------------------------------------- */
+/* shrink - left sign-panel left 
+/* ------------------------------------------- */
+
+.sign-panel.left.shrink.ng-hide {
+  transition-duration: 100ms;
+  -webkit-transition-duration: 100ms;
+  width: 0%;
+  padding: 0px;
+  margin: 0px;
+
+}
+
+// .sign-panel.left.shrink.ng-hide-add-active {
+//   transition-duration: $sign-panel-shrink-ng-hide;
+//   -webkit-transition-duration: $sign-panel-shrink-ng-hide;
+//   width: 15%;
+//   opacity: 0;
+// }
+
+/* ------------------------------------------- */
+/* fada-in - sign-up-terms-info
+/* ------------------------------------------- */
+
+// $sign-up-terms-info-fade-in-ng-hide: 1000ms;
+
+// .sign-up-terms-info.fade-in.ng-hide-remove {
+//   transition-duration: $sign-up-terms-info-fade-in-ng-hide;
+//   -webkit-transition-duration: $sign-up-terms-info-fade-in-ng-hide;
+//   width: 0%;
+// }
+// .sign-up-terms-info.fade-in.ng-hide-remove-active {
+//   transition-duration: $sign-up-terms-info-fade-in-ng-hide;
+//   -webkit-transition-duration: $sign-up-terms-info-fade-in-ng-hide;
+//   width: 100%;
+// }
+
+
+/* ------------------------------------------- */
+/* slide-left  - sign-up-btn
+/* ------------------------------------------- */
+
+$sign-up-btn-slide-left-ng-hide: 100ms;
+
+.sign-up-btn.slide-left.ng-hide {
+  transition-duration: $sign-up-btn-slide-left-ng-hide;
+  -webkit-transition-duration: $sign-up-btn-slide-left-ng-hide;
+  transform: translateX(-100%);
+  -ms-transform: translateX(-100%);
+  -webkit-transform: translateX(-100%);
+  opacity: 0;
+  width: 0px;
+}
+
+/* end of ANIMATIONS
+/* ------------------------------------------- */

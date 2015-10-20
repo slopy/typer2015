@@ -1,61 +1,130 @@
-<form ng-submit="submitLogin(loginForm)" role="form" ng-init="loginForm = {}">
-  <div class="form-group">
-    <label for="email">Email</label>
-    <input type="email"
-           name="email"
-           id="email"
-           ng-model="loginForm.email"
-           required="required"
-           class="form-control">
+<div class='row'>
+
+  <div class='hidden-xs col-sm-2 col-md-3 new-session-left-panel'>
+    <div></div>
   </div>
+  <div class='col-xs-12 col-sm-8 col-md-6 sign-container'>
+  
+    <div class="panel sign-panel left shrink" ng-hide="sign_up_show">
+    </div>
+    
+    <div class="panel sign-panel sign-in">
+      <form ng-submit="loginBtn(loginForm)" role="form" ng-init="loginForm = {}" ng-class="{error: login_error_show}" novalidate>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email"
+                 name="email"
+                 id="email"
+                 ng-model="loginForm.email"
+                 required="required"
+                 class="form-control">
+        </div>
 
-  <div class="form-group">
-    <label for="password">Password</label>
-    <input type="password"
-           name="password"
-           id="password"
-           ng-model="loginForm.password"
-           required="required"
-           class="form-control">
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password"
+                 name="password"
+                 id="password"
+                 ng-model="loginForm.password"
+                 required="required"
+                 class="form-control">
+        </div>
+
+        <div class="centered">
+          <button id='sign-in-btn' type="submit" class="btn btn-success btn-lg"><i class="fa fa-sign-in"></i> Get in! </i></button>
+        </div>
+
+        <div class="sign-in-info">
+          <span ng-hide="login_error_show">
+            <i class="fa fa-google-plus"></i>
+            <i class="fa fa-facebook"></i>
+            <i class="fa fa-twitter"></i>
+          </span>
+          <span class="login-errors" ng-show='login_error_show'>
+            <ul>
+              <li ng-repeat = 'error in login_errors'>{{error}}</li>
+            </ul>
+          </span>
+        </div>
+      </form>
+    </div>
+
+    <div class="panel sign-panel sign-up-btn slide-left" ng-hide='sign_up_show'>
+      <button class='btn btn-primary btn-lg' ng-click='signUpShowClick()'> Sign up! </button>
+    </div>
+
+    <div id="sign-up-panel" class="panel sign-panel sign-up slide-right" my-show="sign_up_show"  ng-show="sign_up_show"  after-show='afterSignUpShowClick()' show-with-action-after>
+      <form ng-submit="submitRegistration(registrationForm)" role="form" ng-init="registrationForm = {}"  ng-class="{error: register_error_show}" novalidate>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email"
+                     name="email"
+                     id="email"
+                     ng-model="registrationForm.email"
+                     required
+                     class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="username">Username (not required)</label>
+              <input type="text"
+                     name="username"
+                     id="username"
+                     ng-model="registrationForm.username"
+                     class="form-control">
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password"
+                     name="password"
+                     id="password"
+                     ng-model="registrationForm.password"
+                     required
+                     class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="password_confirmation">Repeat Password</label>
+              <input type="password"
+                     name="password_confirmation"
+                     id="password_confirmation"
+                     ng-model="registrationForm.password_confirmation"
+                     required
+                     class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class='clearfix'></div>
+
+        <div class='centered'>
+          <button id='sign-up-btn' type="submit" class="btn btn-primary btn-lg"> <i class="fa fa-check"></i> Do it!<Sign up!/button>
+        </div>
+
+        <div class="sign-up-terms-info fade-in"  ng-show="sign_up_show" >
+          <span ng-hide='register_error_show'>
+            <i>By signing up you indicate that you have read and agree to the Terms and Conditions and Privacy Policy.</i>
+          </span>
+          <span class="register-errors" ng-show='register_error_show'>
+            <ul>
+              <li ng-repeat = 'error in register_errors'>{{error}}</li>
+            </ul>
+          </span>
+        </div>
+
+      
+        <div class='clearfix'></div>
+      </form>
+    </div>
+
   </div>
+</div>
 
-  <button type="submit" class="btn btn-primary btn-lg">Sign in</button>
-</form>
 
-<p>
----
-</p>
 
-<form ng-submit="submitRegistration(registrationForm)" role="form" ng-init="registrationForm = {}">
-  <div class="form-group">
-    <label for="email">Email</label>
-    <input type="email"
-           name="email"
-           id="email"
-           ng-model="registrationForm.email"
-           required="required"
-           class="form-control">
-  </div>
 
-  <div class="form-group">
-    <label for="password">Password</label>
-    <input type="password"
-           name="password"
-           id="password"
-           ng-model="registrationForm.password"
-           required="required"
-           class="form-control">
-  </div>
 
-  <div class="form-group">
-    <label for="password_confirmation">Password confirmation</label>
-    <input type="password"
-           name="password_confirmation"
-           id="password_confirmation"
-           ng-model="registrationForm.password_confirmation"
-           required="required"
-           class="form-control">
-  </div>
 
-  <button type="submit" class="btn btn-primary btn-lg">Register</button>
-</form>
