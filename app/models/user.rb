@@ -2,7 +2,7 @@ class User
   include Mongoid::Document
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable, :registerable, :omniauthable,
          :recoverable, :rememberable, :trackable, :validatable
 
   ## Database authenticatable
@@ -41,7 +41,8 @@ class User
   field :provider, type: String
   field :uid, default: ""
 
-    # Get rid of devise-token_auth issues from activerecord
+  validates_uniqueness_of :uid, :scope => :provider
+
   def self.table_exists?
     true
   end
@@ -53,6 +54,10 @@ class User
 
   def self.serialize(*args)
 
+  end
+
+  def self.find_for_oauth(auth)
+    find_or_create_by(uid: auth.uid, provider: auth.provider)
   end
 
   include DeviseTokenAuth::Concerns::User

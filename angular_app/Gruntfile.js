@@ -123,7 +123,7 @@ module.exports = function (grunt) {
       },
       proxies: [
         {
-            context: '/api/',
+            context: ['/api/','/omniauth/'],
             host: '0.0.0.0',
             port: 3000
         }

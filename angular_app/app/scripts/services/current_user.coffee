@@ -9,17 +9,20 @@
  # Factory in the angularAppApp.
 ###
 angular.module 'angularAppApp'
-  .factory 'currentUser', ['$auth','$window', ($auth, $window) ->
-    currentUser = {}
+
+  .factory 'currentUser', ['$auth','$cookies', ($auth, $cookies) ->
+    userData = {}
     authenticated = null
     
     init = -> 
-      if $window.localStorage["auth_headers"]
-        userInfo = JSON.parse($window.localStorage["auth_headers"]);
-        $auth.validateUser().then (response) ->
-          if response.signedIn
-            currentUser = response
-            authenticated = true            
+      if $cookies.get("auth_headers")
+        userInfo = JSON.parse($cookies.get("auth_headers"));
+        $auth.validateUser()
+          .then (response) ->
+            if response.signedIn
+              userData = response
+              authenticated = true
+          .catch (response) -> 
     init()
 
     checkIfAuthenticated: ->
@@ -27,19 +30,20 @@ angular.module 'angularAppApp'
 
     logout: ->
       $auth.signOut
-      currentUser = {}
+      userData = {}
       authenticated = null
-      $window.localStorage.clear()
+      $cookies.remove("auth_headers")
 
-    set: (user) -> 
+    set: (user) ->       
       if user.signedIn is true and $auth.validateUser()
         authenticated = true
-        currentUser = user
+        userData = user
       else
         authenticated = null
-        currentUser = {}
+        userData = {}
 
     get: ->
-      currentUser
+      userData
 
+    data: userData
 ]

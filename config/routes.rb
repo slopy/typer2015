@@ -3,9 +3,11 @@ Rails.application.routes.draw do
   # devise_for :users, path: "api/auth", 
   # controllers: { sessions: "v1/users/sessions", registrations: "v1/users/registrations" }
 
-  mount_devise_token_auth_for 'User', at: 'api/auth', skip: [:omniauth_callbacks],
+  mount_devise_token_auth_for 'User', at: 'api/auth',
   controllers: {
-    registrations:  'v1/users/registrations'
+    registrations:  'v1/users/registrations',
+    omniauth_callbacks:  'v1/users/omniauth_callbacks',
+    token_validations:  'v1/users/token_validations'
   }
 
 

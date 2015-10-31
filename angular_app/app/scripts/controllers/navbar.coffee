@@ -9,13 +9,15 @@
 ###
 angular.module 'angularAppApp'
   .controller 'NavbarCtrl', ['$scope','currentUser','$state', ($scope, currentUser,$state) ->
+    user = currentUser
 
     $scope.signOutBtn = ->
-      currentUser.logout()
+      user.logout()
       $state.go('sign_in')
       
     $scope.userLogged = ->
-      currentUser.checkIfAuthenticated()
+      # console.log user.data
+      user.checkIfAuthenticated()
 
     return
 ]

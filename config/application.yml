@@ -1,0 +1,8 @@
+development_database: 'typer2015_development'
+
+gmail_id: '459649175793-o1oudhge161lg66mn8d34uus263dfobt.apps.googleusercontent.com' 
+gmail_secret: 'S7Ie4CTQ94-WjBnVub-DWymZ'
+
+# Production
+
+production_database: ''

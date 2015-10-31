@@ -56,5 +56,17 @@ angular.module 'angularAppApp'
           $scope.registrationForm.password_confirmation  = ""
           $scope.register_errors = response.data.errors.full_messages
 
+    $scope.loginWithGmail = ->
+      $auth.authenticate('google_oauth2')
+        .then (response) ->
+          if response.signedIn
+            currentUser.set response
+            $state.go('home')
+
+        .catch (response) ->
+          if response.reason is 'unauthorized'
+            $scope.login_error_show = true
+            $scope.login_errors = ['Something went wrong when connecting to gmail account']
+
     return
 ]

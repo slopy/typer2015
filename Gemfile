@@ -20,6 +20,8 @@ gem 'omniauth-google-oauth2', :git => 'git://github.com/zquestz/omniauth-google-
 # To use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+gem "figaro"
+
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
 

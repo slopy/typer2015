@@ -24,16 +24,17 @@ var typer = angular
 typer.run(function ($rootScope, $state, currentUser) {
 
     $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
-        console.log(error)
+
+        console.log(error);
         if(error === 'already_logged'){
             event.preventDefault();
             $state.go('home'); 
-            return
+            return;
         } 
-        if(error.reason === 'unauthorized'){
+        if(error.reason === 'unauthorized' || error.reason === 'access_denied'){
             event.preventDefault();
             $state.go('sign_in'); 
-            return
+            return;
         } 
         if (currentUser.checkIfAuthenticated() === null) {
             event.preventDefault();
@@ -63,6 +64,16 @@ typer.config(function ($stateProvider,$urlRouterProvider,$authProvider) {
                 return $auth.validateUser();
             }
         }
+    })
+    .state('no-group', {
+        url: '/no-group',
+        templateUrl: 'views/no_group.html',
+        controller: 'NoGroupCtrl',
+        resolve: {
+            auth: function($auth) {
+                return $auth.validateUser();
+            }
+        }
     });
 
     $authProvider.configure({
@@ -70,8 +81,19 @@ typer.config(function ($stateProvider,$urlRouterProvider,$authProvider) {
         tokenValidationPath: '/auth/validate_token',
         emailRegistrationPath: '/auth',
         signOutUrl: '/auth/sign_out',
-        storage: 'localStorage',
+        storage: 'cookies',
         validateOnPageLoad: true,
+        omniauthWindowType: 'newWindow',
+        authProviderPaths: {
+            google_oauth2:   '/auth/google_oauth2'
+        },
+        tokenFormat: {
+            'access-token': '{{ token }}',
+            'token-type':   'Bearer',
+            'client':       '{{ clientId }}',
+            'expiry':       '{{ expiry }}',
+            'uid':          '{{ uid }}'
+        },
     });
   
 });

@@ -30,6 +30,8 @@ $btn-success-color: #1a80de;
 $collapse-bg-color: $btn-primary-bg-color;
 $collapse-color: $panel-background;
 
+$red: red;
+$white: white;
 /* end of variables
 /* ------------------------------------------- */
 
@@ -316,6 +318,14 @@ $collapse-color: $panel-background;
     padding: 5px;
     border: 1px solid $border-color;
     margin: 10px;
+  }
+
+  .fa.fa-google-plus {
+    background-color: $red;
+    color: $white;
+    &:hover {
+      opacity: 0.8;
+    }
   }
 }
 

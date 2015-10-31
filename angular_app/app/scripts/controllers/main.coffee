@@ -9,13 +9,14 @@
 ###
  
 angular.module 'angularAppApp'
-  .controller 'MainCtrl',[ '$auth' ,($scope, $http, $auth) ->
+  .controller 'MainCtrl',[ '$scope','$http','$auth','currentUser','$state',
+    ($scope, $http, $auth, currentUser, $state) ->
 
-    $scope.getGroups = ->
-      $http.get '/api/v1/groups'
-        .success (response) -> 
-            console.log(response);
-            $scope.groups = response
+      user = currentUser.get()
 
-    return
+      # go to no-group if user has no group
+      # if user.groups.lenght > 0
+      if true
+        $state.go('no-group')
+
 ]

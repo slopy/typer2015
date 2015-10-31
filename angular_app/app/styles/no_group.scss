@@ -1,0 +1,106 @@
+ 
+/* ------------------------------------------- */
+/* no-group state styles
+/* ------------------------------------------- */
+
+
+$jumbotron-background: rgba(229, 228, 223, 0.8) ;
+$navbar-default-color: #000;
+
+.jumbotron {
+  padding: 10px 20px 5px 20px !important;
+  background-color: $jumbotron-background;
+  -webkit-box-shadow: inset 0px 0px 50px 2px rgba(0,0,0,0.1);
+  -moz-box-shadow: inset 0px 0px 50px 2px rgba(0,0,0,0.1);
+  box-shadow: inset 0px 0px 50px 2px rgba(0,0,0,0.1);
+  height: 100%;
+  p {
+    font-weight: bold;
+    margin: 5px 0px 45px 0px;
+    padding: 10px 0px 10px 0px;
+  }
+
+  p:first-child{
+    margin-bottom: 5px;
+  }
+
+  .line {
+    height: 1%;
+    border-bottom: 1px solid $navbar-default-color;
+    height: 1px;
+    width: 80%;
+    padding-top: 10px;
+    margin: auto;
+    margin-bottom: 10px;
+  }
+
+  .button-conteiner {
+    position: absolute;
+    bottom: 20px;
+    margin-bottom: 0px;
+    text-align: center;
+    left: 0;
+    right: 0;    
+  }
+
+}
+
+.row.same-height {
+  display: table;
+
+  .col-same-height {
+    display: table-cell;
+    float: none;
+  }
+    
+  .jumbotron {
+   display: inline-block;
+   vertical-align: top;
+  }
+}
+
+@media screen and (max-width: 768px) { 
+
+  .row.same-height {
+    display: inherit;
+
+    .col-same-height {
+      display: inherit;
+      float: inherit;
+    }
+      
+    .jumbotron {
+     display: inherit;
+     vertical-align: inherit;
+    }
+  }
+
+  .jumbotron {
+
+    p {
+      font-weight: bold;
+      margin: 5px 0px 35px 0px;
+      padding: 10px 0px 10px 0px;
+    }
+
+    .line {
+      height: 1%;
+      border-bottom: 1px solid $navbar-default-color;
+      height: 1px;
+      width: 80%;
+      padding-top: 10px;
+      margin: auto;
+      margin-bottom: 10px;
+    }
+
+    .button-conteiner {
+      position: relative; 
+    }
+
+    .watch-demo-btn {
+      margin-top: 15px;
+    }
+
+  }
+
+}  
